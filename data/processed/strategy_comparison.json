@@ -1,0 +1,112 @@
+{
+  "event_count": 60,
+  "strategies": [
+    {
+      "name": "Consensus Divergence",
+      "total_return": -0.273,
+      "annualized_return": -0.273,
+      "sharpe_ratio": 0.0732,
+      "max_drawdown": 0.6301,
+      "calmar_ratio": -0.4334,
+      "win_rate": 0.2727,
+      "profit_factor": 0.8655,
+      "total_trades": 55,
+      "winning_trades": 15,
+      "losing_trades": 40,
+      "avg_alpha": 0.255,
+      "avg_position_size": 0.0456,
+      "high_conf_win_rate": 0.2885,
+      "elapsed_seconds": 1.0117
+    },
+    {
+      "name": "Sentiment Momentum",
+      "total_return": 0.0927,
+      "annualized_return": 0.0927,
+      "sharpe_ratio": 0.3601,
+      "max_drawdown": 0.4308,
+      "calmar_ratio": 0.2152,
+      "win_rate": 0.4833,
+      "profit_factor": 1.0651,
+      "total_trades": 60,
+      "winning_trades": 29,
+      "losing_trades": 31,
+      "avg_alpha": 0.1211,
+      "avg_position_size": 0.036,
+      "high_conf_win_rate": 0.0,
+      "elapsed_seconds": 1.0005
+    },
+    {
+      "name": "Contrarian Swarm",
+      "total_return": -0.2504,
+      "annualized_return": -0.2504,
+      "sharpe_ratio": 0.0374,
+      "max_drawdown": 0.5885,
+      "calmar_ratio": -0.4255,
+      "win_rate": 0.2308,
+      "profit_factor": 0.8681,
+      "total_trades": 52,
+      "winning_trades": 12,
+      "losing_trades": 40,
+      "avg_alpha": 0.2347,
+      "avg_position_size": 0.0433,
+      "high_conf_win_rate": 0.0,
+      "elapsed_seconds": 0.981
+    },
+    {
+      "name": "Event Catalyst",
+      "total_return": -0.21,
+      "annualized_return": -0.21,
+      "sharpe_ratio": -0.0179,
+      "max_drawdown": 0.5325,
+      "calmar_ratio": -0.3944,
+      "win_rate": 0.2632,
+      "profit_factor": 0.8729,
+      "total_trades": 57,
+      "winning_trades": 15,
+      "losing_trades": 42,
+      "avg_alpha": 0.2316,
+      "avg_position_size": 0.0359,
+      "high_conf_win_rate": 0.0,
+      "elapsed_seconds": 2.0363
+    },
+    {
+      "name": "Cross-Market Arb",
+      "total_return": -0.2394,
+      "annualized_return": -0.2394,
+      "sharpe_ratio": 0.0794,
+      "max_drawdown": 0.5992,
+      "calmar_ratio": -0.3994,
+      "win_rate": 0.2931,
+      "profit_factor": 0.8789,
+      "total_trades": 58,
+      "winning_trades": 17,
+      "losing_trades": 41,
+      "avg_alpha": 0.2829,
+      "avg_position_size": 0.0434,
+      "high_conf_win_rate": 0.1667,
+      "elapsed_seconds": 1.0084
+    }
+  ],
+  "ranking_by_sharpe": [
+    "Sentiment Momentum",
+    "Cross-Market Arb",
+    "Consensus Divergence",
+    "Contrarian Swarm",
+    "Event Catalyst"
+  ],
+  "ranking_by_return": [
+    "Sentiment Momentum",
+    "Event Catalyst",
+    "Cross-Market Arb",
+    "Contrarian Swarm",
+    "Consensus Divergence"
+  ],
+  "ranking_by_calmar": [
+    "Sentiment Momentum",
+    "Event Catalyst",
+    "Cross-Market Arb",
+    "Contrarian Swarm",
+    "Consensus Divergence"
+  ],
+  "best_overall": "Sentiment Momentum"
+}

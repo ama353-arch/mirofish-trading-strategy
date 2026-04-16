@@ -1,0 +1,95 @@
+{
+  "prediction_market": {
+    "swarm_result": {
+      "event": "Will the US enter a recession by Q4 2026?",
+      "swarm_probability": 0.3591,
+      "swarm_std": 0.016,
+      "swarm_median": 0.3662,
+      "r_hat": 0.99,
+      "effective_sample_size": 250.0,
+      "converged": true,
+      "bullish_fraction": 0.124,
+      "mean_conviction": 0.5797,
+      "n_simulations": 5,
+      "archetype_probabilities": {
+        "institutional_trader": 0.3454,
+        "social_influencer": 0.2618,
+        "data_scientist": 0.3418,
+        "political_analyst": 0.3783,
+        "contrarian_trader": 0.4155,
+        "retail_bettor": 0.3678,
+        "domain_expert": 0.4876,
+        "noise_trader": 0.2884
+      }
+    },
+    "signal": {
+      "event": "Will the US enter a recession by Q4 2026?",
+      "direction": "no_trade",
+      "swarm_prob": 0.3591,
+      "market_prob": 0.35,
+      "alpha": 0.0091,
+      "swarm_std": 0.016,
+      "confidence": "low",
+      "converged": true,
+      "kelly_fraction": 0.0035,
+      "position_size_pct": 0.0035,
+      "stop_loss": 0,
+      "take_profit": 0,
+      "expected_edge": 0.0259,
+      "reasoning": "Alpha (0.009) below threshold (0.05)"
+    }
+  },
+  "equity": {
+    "swarm_result": {
+      "event": "Apple Q2 2026 earnings report \u2014 focus on AI services revenue",
+      "swarm_probability": 0.4045,
+      "swarm_std": 0.0415,
+      "swarm_median": 0.4097,
+      "r_hat": 0.9905,
+      "effective_sample_size": 250.0,
+      "converged": true,
+      "bullish_fraction": 0.184,
+      "mean_conviction": 0.5848,
+      "n_simulations": 5,
+      "archetype_probabilities": {
+        "retail_investor": 0.3699,
+        "macro_strategist": 0.5304,
+        "quant_trader": 0.4158,
+        "fundamental_analyst": 0.3462,
+        "contrarian": 0.4391,
+        "algo_trader": 0.4108,
+        "market_maker": 0.406,
+        "event_driven": 0.4039
+      }
+    },
+    "signal": {
+      "ticker": "AAPL",
+      "event": "Apple Q2 2026 earnings report \u2014 focus on AI services revenue",
+      "direction": "no_trade",
+      "bullish_fraction": 0.184,
+      "mean_conviction": 5.85,
+      "sentiment_momentum": 0.001,
+      "position_size_pct": 0.0117,
+      "stop_loss_atr_mult": 2.0,
+      "time_stop_days": 5,
+      "confidence": "low",
+      "archetype_breakdown": {
+        "retail_investor": 0.37,
+        "macro_strategist": 0.53,
+        "quant_trader": 0.416,
+        "fundamental_analyst": 0.346,
+        "contrarian": 0.439,
+        "algo_trader": 0.411,
+        "market_maker": 0.406,
+        "event_driven": 0.404
+      }
+    }
+  },
+  "backtest": {
+    "total_return": 0.16212268183023207,
+    "sharpe_ratio": 0.9113955990715775,
+    "max_drawdown": 0.19550915229901278,
+    "win_rate": 0.46153846153846156,
+    "total_trades": 26
+  }
+}

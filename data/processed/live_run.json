@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-04-14 00:51:59",
+  "config": {
+    "exchanges": [
+      "polymarket"
+    ],
+    "query": "US elections 2026",
+    "n_agents": 60,
+    "n_sims": 5,
+    "mode": "dry_run"
+  },
+  "markets_scanned": 10,
+  "markets_simulated": 3,
+  "trades_recommended": 3,
+  "signals": [
+    {
+      "market": "Will US elections 2026 happen before end of 2026?",
+      "exchange": "polymarket_mock",
+      "direction": "long_no",
+      "swarm_prob": 0.3384391583142253,
+      "market_prob": 0.45,
+      "alpha": -0.11156084168577474,
+      "confidence": "medium",
+      "position_pct": 0.05
+    },
+    {
+      "market": "Will US elections 2026 be resolved by June 2026?",
+      "exchange": "polymarket_mock",
+      "direction": "long_yes",
+      "swarm_prob": 0.3586775007150447,
+      "market_prob": 0.26,
+      "alpha": 0.09867750071504466,
+      "confidence": "medium",
+      "position_pct": 0.03333699348481238
+    },
+    {
+      "market": "Is US elections 2026 more likely than not?",
+      "exchange": "polymarket_mock",
+      "direction": "long_no",
+      "swarm_prob": 0.35927320547830444,
+      "market_prob": 0.53,
+      "alpha": -0.1707267945216956,
+      "confidence": "high",
+      "position_pct": 0.05
+    }
+  ]
+}
