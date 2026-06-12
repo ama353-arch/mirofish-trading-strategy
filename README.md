@@ -66,15 +66,42 @@ Sample output:
   Kelly fraction:     1.57%
 ```
 
-Backtesting:
+> ⚠️ The `+7.3% Alpha` above is illustrative, not a performance claim. See the
+> backtesting note below.
+
+## Backtesting — read this before trusting any number
+
+There are **two** backtest paths in this repo, and they are not equal:
+
+- `src.signals.backtest.BacktestEngine` — the original single-pass engine. Its
+  demo (`run_simulation.py --demo`) feeds it **synthetic events where the swarm
+  is defined in code to be a more accurate estimator than the market**. Such a
+  backtest cannot lose and proves nothing about real edge. Treat any number it
+  produces — including older README figures — as **not evidence**.
+
+- `src.signals.walkforward` — the **hardened, out-of-sample harness** (use
+  this). Walk-forward train/test folds with provably no look-ahead, realistic
+  spread-crossing costs, honest date-based annualization, **deflated Sharpe**
+  (corrects for how many strategies/params were tried), and block-bootstrap
+  Monte Carlo. Reported performance is **test-fold-only**.
+
+Run the honest end-to-end backtest (real swarm, out-of-sample):
+
+```bash
+python3 run_walkforward.py                      # bundled sample markets
+python3 run_walkforward.py path/to/markets.json # your resolved markets
+```
 
 ```python
-from src.signals.backtest import BacktestEngine
-bt = BacktestEngine(initial_capital=10_000)
-result = bt.backtest_prediction_markets(events)
-mc = bt.monte_carlo_equity_curve(n_simulations=500)
-print(f"Median final: ${mc['median'][-1]:,.0f}  |  5th: ${mc['p5'][-1]:,.0f}  |  95th: ${mc['p95'][-1]:,.0f}")
+from src.signals.walkforward import WalkForwardBacktester, deflated_sharpe_ratio
+wf = WalkForwardBacktester(train_size=8, test_size=5)
+result = wf.run(events, signal_fn=brain, param_grid=[{"edge_min": 0.05}])
+print(result.stats())   # OOS win rate, total return — test folds only
 ```
+
+**The gate:** nothing touches real money until it is positive, statistically
+significant, and out-of-sample (deflated Sharpe > ~0.95). See
+[`docs/SCOPE.md`](docs/SCOPE.md).
 
 ---
 
