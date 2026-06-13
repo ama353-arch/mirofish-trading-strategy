@@ -54,3 +54,27 @@ captured; surviving edge is maker-only / longer-horizon.
   *rare, large* mispricings (a move that genuinely overshoots fair value), which
   are where real money is vs the thin average move.
 - **Other sports** — soccer/NFL may show a larger or different effect.
+
+## Update: model-anchored mispricing thesis — REJECTED
+
+Joined ESPN play-by-play win-probability + our diffusion model + Kalshi prices on
+a common wall-clock timeline across 40 games (3,342 contested points,
+`fetch_aligned_games.py`). Calibration vs actual outcomes:
+
+| Predictor | Brier |
+|---|---|
+| Kalshi market price | **0.1909** (best) |
+| ESPN win-prob | 0.1928 |
+| Our diffusion model | 0.2187 |
+
+On the 1,179 points where ESPN and the market disagree by >10c, the **market is
+more right** (0.232 vs 0.243). The in-game market is better calibrated than any
+model we can access, so there is **no model-anchored mispricing edge** — fading
+the market toward a model would lose. NBA in-game is efficient relative to
+ESPN-grade win-prob models.
+
+## Net for NBA in-game
+- Momentum continuation: real (t>3) but thin (<= spread as a taker).
+- Model-anchored mispricing: rejected (market beats available models).
+Surviving candidates: maker-only execution of the thin edge, a genuinely
+better-than-market model (hard), or a different arena.
