@@ -87,3 +87,42 @@ def backtest_game(
         if trade is not None:
             trades.append(trade)
     return trades
+
+
+def backtest_price_momentum(
+    prices,
+    final_outcome: float,
+    thesis: str = "fade",
+    window: int = 5,
+    momentum_threshold: float = 0.05,
+) -> list[dict]:
+    """Price-only momentum backtest: momentum is the recent swing in the live
+    market price itself (no game-state model). FOLLOW rides the move, FADE bets
+    reversion. Each trade settles at the game's `final_outcome`.
+
+    Use this when only the market price trajectory is available (Kalshi
+    candlesticks). The model-anchored version (`backtest_game`) needs play-by-
+    play for the win-probability model.
+    """
+    from src.signals.walkforward import _simulate_trade
+
+    trades: list[dict] = []
+    for i in range(len(prices)):
+        if i < window:
+            continue
+        momentum = prices[i] - prices[i - window]
+        if abs(momentum) < momentum_threshold:
+            continue
+        if thesis == "follow":
+            side = "buy" if momentum > 0 else "sell"
+        elif thesis == "fade":
+            side = "sell" if momentum > 0 else "buy"
+        else:
+            raise ValueError(f"thesis must be 'fade' or 'follow', got {thesis!r}")
+        price = prices[i]
+        event = {"id": i, "timestamp": i, "market_prob": price,
+                 "bid": price, "ask": price, "actual_outcome": final_outcome}
+        trade = _simulate_trade(event, side, size_pct=0.02)
+        if trade is not None:
+            trades.append(trade)
+    return trades

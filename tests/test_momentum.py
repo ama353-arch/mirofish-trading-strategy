@@ -108,3 +108,25 @@ def test_backtest_game_makes_no_trades_without_momentum():
     trades = backtest_game(flat, final_outcome=1.0, thesis="fade",
                            momentum_threshold=0.10)
     assert trades == []
+
+
+# ── Price-momentum backtest (market price only, no game-state model) ──────────
+
+def test_price_momentum_follow_vs_fade_on_a_rising_winner():
+    """Win-price rises through the game and the home team WINS (outcome 1).
+    FOLLOW (ride the rise) wins; FADE (bet reversion) loses."""
+    from src.sports.momentum import backtest_price_momentum
+    prices = [0.50, 0.55, 0.60, 0.65, 0.70, 0.75]
+    follow = backtest_price_momentum(prices, final_outcome=1.0, thesis="follow",
+                                     window=3, momentum_threshold=0.05)
+    fade = backtest_price_momentum(prices, final_outcome=1.0, thesis="fade",
+                                   window=3, momentum_threshold=0.05)
+    assert follow and all(t["pnl_per_dollar"] > 0 for t in follow)
+    assert fade and all(t["pnl_per_dollar"] < 0 for t in fade)
+
+
+def test_price_momentum_ignores_small_moves():
+    from src.sports.momentum import backtest_price_momentum
+    flat = [0.50, 0.51, 0.50, 0.51, 0.50, 0.51]
+    assert backtest_price_momentum(flat, 1.0, thesis="fade",
+                                   window=3, momentum_threshold=0.05) == []
