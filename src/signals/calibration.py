@@ -74,6 +74,59 @@ def reliability_curve(probs, outcomes, n_bins: int = 10) -> list[dict]:
     return bins
 
 
+def _sigmoid(z: float) -> float:
+    if z >= 0:
+        return 1.0 / (1.0 + math.exp(-z))
+    e = math.exp(z)
+    return e / (1.0 + e)
+
+
+def _logit(p: float, eps: float = 1e-6) -> float:
+    p = min(1.0 - eps, max(eps, p))
+    return math.log(p / (1.0 - p))
+
+
+class Calibrator:
+    """Platt scaling: learn a source's bias on training data and correct it.
+
+    Fits `calibrated = sigmoid(a * logit(raw) + b)` by gradient descent on log
+    loss. The slope `a` is clamped to be non-negative so calibration never
+    inverts the source's ranking — it rescales confidence, it doesn't flip
+    signal. Fit on a train fold, apply to the untouched test fold: no look-ahead.
+    """
+
+    def __init__(self):
+        self.a = 1.0
+        self.b = 0.0
+
+    def fit(self, probs, outcomes, lr: float = 0.5, iters: int = 2000) -> "Calibrator":
+        _validate(probs, outcomes)
+        if not probs:
+            return self
+        xs = [_logit(p) for p in probs]
+        ys = list(outcomes)
+        n = len(xs)
+        a, b = 1.0, 0.0
+        for _ in range(iters):
+            ga = gb = 0.0
+            for x, y in zip(xs, ys):
+                pred = _sigmoid(a * x + b)
+                err = pred - y
+                ga += err * x
+                gb += err
+            a -= lr * ga / n
+            b -= lr * gb / n
+        self.a = max(0.0, a)   # never invert ranking
+        self.b = b
+        return self
+
+    def transform(self, probs) -> list[float]:
+        return [
+            max(0.0, min(1.0, _sigmoid(self.a * _logit(p) + self.b)))
+            for p in probs
+        ]
+
+
 def calibration_report(probs, outcomes, n_bins: int = 10) -> dict:
     """Full calibration summary for a probability source."""
     _validate(probs, outcomes)

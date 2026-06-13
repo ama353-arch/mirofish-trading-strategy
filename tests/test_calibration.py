@@ -22,6 +22,7 @@ from src.signals.calibration import (
     log_loss,
     reliability_curve,
     calibration_report,
+    Calibrator,
 )
 
 
@@ -84,3 +85,26 @@ def test_calibration_report_carries_core_metrics():
 def test_mismatched_lengths_raise():
     with pytest.raises(ValueError):
         brier_score([0.5, 0.5], [1])
+
+
+# ── Fitted calibration layer (Platt scaling) — swarm refinement ──────────────
+
+def test_calibrator_corrects_an_overconfident_source():
+    """An overconfident source (says 0.95 but only ~60% happen) gets pulled
+    toward reality; fitted calibration lowers its Brier."""
+    raw = [0.95, 0.95, 0.95, 0.95, 0.95, 0.05, 0.05, 0.05, 0.05, 0.05]
+    outcomes = [1, 1, 1, 0, 0, 0, 0, 0, 1, 1]   # far less separable than 0.95/0.05 implies
+    cal = Calibrator().fit(raw, outcomes)
+    calibrated = cal.transform(raw)
+    assert brier_score(calibrated, outcomes) <= brier_score(raw, outcomes)
+    assert all(0.0 <= p <= 1.0 for p in calibrated)
+
+
+def test_calibrator_transform_is_monotonic_in_the_raw_probability():
+    """Calibration may rescale, but a higher raw probability must never map to a
+    lower calibrated probability — it must preserve ranking."""
+    raw = [0.2, 0.4, 0.6, 0.8]
+    outcomes = [0, 0, 1, 1]
+    cal = Calibrator().fit(raw, outcomes)
+    out = cal.transform([0.1, 0.3, 0.5, 0.7, 0.9])
+    assert out == sorted(out)
