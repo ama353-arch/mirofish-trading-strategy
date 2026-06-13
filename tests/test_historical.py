@@ -113,3 +113,23 @@ def test_both_adapters_produce_schemas_the_harness_can_consume():
     # Both must be tradeable by the same simulator without adaptation.
     assert _simulate_trade(k, "buy", 0.02)["pnl_per_dollar"] > 0   # bought YES, won
     assert _simulate_trade(p, "buy", 0.02)["pnl_per_dollar"] == -1.0  # bought YES, lost
+
+
+# ── Kalshi: current API uses *_dollars (0-1), not cents ──────────────────────
+
+def test_kalshi_adapter_reads_current_dollars_fields():
+    """The live Kalshi API returns yes_bid_dollars / yes_ask_dollars /
+    last_price_dollars in the 0-1 range. The adapter must read these."""
+    raw = {
+        "ticker": "KXNBA-LAL",
+        "close_time": "2026-04-01T03:00:00Z",
+        "yes_bid_dollars": 0.58,
+        "yes_ask_dollars": 0.62,
+        "last_price_dollars": 0.60,
+        "result": "yes",
+    }
+    ev = from_kalshi_market(raw)
+    assert ev["bid"] == pytest.approx(0.58)
+    assert ev["ask"] == pytest.approx(0.62)
+    assert ev["market_prob"] == pytest.approx(0.60)
+    assert ev["actual_outcome"] == 1.0

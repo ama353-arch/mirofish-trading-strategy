@@ -33,9 +33,20 @@ def _clamp01(x: float) -> float:
     return max(0.0, min(1.0, float(x)))
 
 
+def _kalshi_price(raw: dict, dollars_key: str, cents_key: str):
+    """Read a Kalshi price, preferring the current `*_dollars` field (already
+    in 0-1) and falling back to the older cents field (0-100)."""
+    if raw.get(dollars_key) is not None:
+        return float(raw[dollars_key])
+    if raw.get(cents_key) is not None:
+        return raw[cents_key] / 100.0
+    return None
+
+
 def from_kalshi_market(raw: dict) -> dict | None:
-    """Normalize a resolved Kalshi market. Kalshi quotes YES in cents (0-100)
-    and settles `result` to 'yes'/'no'. Returns None if unsettled."""
+    """Normalize a resolved Kalshi market. The live API quotes YES as
+    `yes_bid_dollars` / `yes_ask_dollars` (0-1); older payloads used cents.
+    `result` settles to 'yes'/'no'. Returns None if unsettled."""
     result = str(raw.get("result", "")).strip().lower()
     if result in _YES_RESULTS:
         outcome = 1.0
@@ -44,14 +55,14 @@ def from_kalshi_market(raw: dict) -> dict | None:
     else:
         return None  # unsettled — cannot backtest
 
-    bid = _clamp01(raw["yes_bid"] / 100.0)
-    ask = _clamp01(raw["yes_ask"] / 100.0)
-    last = raw.get("last_price")
-    market_prob = _clamp01(last / 100.0) if last is not None else (bid + ask) / 2.0
+    bid = _clamp01(_kalshi_price(raw, "yes_bid_dollars", "yes_bid") or 0.0)
+    ask = _clamp01(_kalshi_price(raw, "yes_ask_dollars", "yes_ask") or 0.0)
+    last = _kalshi_price(raw, "last_price_dollars", "last_price")
+    market_prob = _clamp01(last) if last is not None else (bid + ask) / 2.0
 
     return {
         "id": raw["ticker"],
-        "timestamp": raw["close_time"],
+        "timestamp": raw.get("close_time") or raw.get("settlement_ts"),
         "market_prob": market_prob,
         "bid": bid,
         "ask": ask,
