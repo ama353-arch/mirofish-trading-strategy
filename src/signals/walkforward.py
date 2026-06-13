@@ -234,20 +234,29 @@ def _simulate_trade(event: dict, side: str, size_pct: float) -> dict | None:
     bid = event["bid"]
     ask = event["ask"]
     outcome = event["actual_outcome"]
-    entry = crossed_fill_price(side, bid=bid, ask=ask)
+    entry = crossed_fill_price(side, bid=bid, ask=ask)  # YES fill: buy->ask, sell->bid
 
-    if entry <= 0.0 or entry >= 1.0:
+    # A buy pays the YES ask and is paid `outcome`. A sell of YES is a BUY of NO:
+    # you pay (1 - yes_bid) and are paid (1 - outcome). Settling a sell at the
+    # YES price (the old bug) overstated profit when the price was near 0.
+    if side == "buy":
+        cost = entry
+        payoff = outcome
+    else:  # sell == buy NO
+        cost = 1.0 - entry
+        payoff = 1.0 - outcome
+
+    if cost <= 0.0 or cost >= 1.0:
         return None  # no room to make money
 
-    # Buying YES pays out `outcome`; "sell" here means buying NO, pays 1-outcome.
-    payoff = outcome if side == "buy" else (1.0 - outcome)
-    pnl_per_dollar = payoff / entry - 1.0
+    pnl_per_dollar = payoff / cost - 1.0
 
     return {
         "event_id": event["id"],
         "timestamp": event["timestamp"],
         "side": side,
         "entry_price": entry,
+        "cost": cost,
         "outcome": outcome,
         "size_pct": size_pct,
         "pnl_per_dollar": pnl_per_dollar,

@@ -89,12 +89,44 @@ def backtest_game(
     return trades
 
 
+def momentum_forward_returns(
+    prices,
+    window: int = 10,
+    horizon: int = 5,
+    momentum_threshold: float = 0.05,
+    min_price: float = 0.0,
+    max_price: float = 1.0,
+) -> list[float]:
+    """The true-edge test: after a momentum event, what does the price do over
+    the NEXT `horizon` ticks?
+
+    Returns, per momentum event, the forward price change *aligned to the
+    momentum direction*: positive means the move continued (a FOLLOW edge),
+    negative means it reverted (a FADE edge). Uses no game outcome and no
+    settlement, so the mechanical "price tracks the game" effect cannot leak in
+    — this isolates genuine market over/under-reaction.
+    """
+    out: list[float] = []
+    for i in range(window, len(prices) - horizon):
+        p = prices[i]
+        if not (min_price <= p <= max_price):
+            continue
+        mom = prices[i] - prices[i - window]
+        if abs(mom) < momentum_threshold:
+            continue
+        fwd = prices[i + horizon] - prices[i]
+        out.append(fwd if mom > 0 else -fwd)   # >0 = continued in momentum direction
+    return out
+
+
 def backtest_price_momentum(
     prices,
     final_outcome: float,
     thesis: str = "fade",
     window: int = 5,
     momentum_threshold: float = 0.05,
+    min_price: float = 0.0,
+    max_price: float = 1.0,
 ) -> list[dict]:
     """Price-only momentum backtest: momentum is the recent swing in the live
     market price itself (no game-state model). FOLLOW rides the move, FADE bets
@@ -110,6 +142,9 @@ def backtest_price_momentum(
     for i in range(len(prices)):
         if i < window:
             continue
+        price = prices[i]
+        if not (min_price <= price <= max_price):
+            continue  # skip the resolution convergence; trade only contested states
         momentum = prices[i] - prices[i - window]
         if abs(momentum) < momentum_threshold:
             continue
@@ -119,7 +154,6 @@ def backtest_price_momentum(
             side = "sell" if momentum > 0 else "buy"
         else:
             raise ValueError(f"thesis must be 'fade' or 'follow', got {thesis!r}")
-        price = prices[i]
         event = {"id": i, "timestamp": i, "market_prob": price,
                  "bid": price, "ask": price, "actual_outcome": final_outcome}
         trade = _simulate_trade(event, side, size_pct=0.02)

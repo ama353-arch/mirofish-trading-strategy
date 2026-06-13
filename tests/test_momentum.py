@@ -130,3 +130,36 @@ def test_price_momentum_ignores_small_moves():
     flat = [0.50, 0.51, 0.50, 0.51, 0.50, 0.51]
     assert backtest_price_momentum(flat, 1.0, thesis="fade",
                                    window=3, momentum_threshold=0.05) == []
+
+
+def test_price_momentum_skips_prices_outside_the_contested_band():
+    """Trades only fire while the game is contested (price in [min,max]); the
+    blowout convergence toward 0/1 is excluded so it can't leak the result."""
+    from src.sports.momentum import backtest_price_momentum
+    prices = [0.50, 0.60, 0.70, 0.80, 0.90, 0.95]
+    trades = backtest_price_momentum(prices, 1.0, thesis="follow", window=3,
+                                     momentum_threshold=0.05,
+                                     min_price=0.15, max_price=0.85)
+    assert trades
+    assert all(t["entry_price"] <= 0.85 for t in trades)
+
+
+# ── True-edge test: does a move continue or revert over the NEXT few minutes? ──
+
+def test_forward_returns_positive_when_momentum_continues():
+    """A steadily rising price means momentum keeps going: the signed forward
+    return (aligned to momentum direction) is positive."""
+    from src.sports.momentum import momentum_forward_returns
+    prices = [0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80]
+    fr = momentum_forward_returns(prices, window=2, horizon=2, momentum_threshold=0.05)
+    assert fr and sum(fr) / len(fr) > 0
+
+
+def test_forward_returns_negative_when_momentum_reverts():
+    """A price that runs up then mean-reverts gives a negative signed forward
+    return at the peak — reversion, the fade edge."""
+    from src.sports.momentum import momentum_forward_returns
+    # a spike that snaps back (true reversion), not a sustained reversal
+    prices = [0.50, 0.50, 0.60, 0.50, 0.50, 0.50]
+    fr = momentum_forward_returns(prices, window=2, horizon=2, momentum_threshold=0.05)
+    assert fr and sum(fr) / len(fr) < 0

@@ -248,3 +248,25 @@ def test_full_length_block_preserves_total_compounded_return():
     paths = block_bootstrap_equity_paths(returns, block_size=4, n_paths=32, seed=1)
     expected_final = float(np.prod([1.0 + r for r in returns]))
     assert paths[:, -1] == pytest.approx(expected_final)
+
+
+# ── Correct binary settlement for SELL (= buy NO at 1-bid) ───────────────────
+
+def test_sell_settles_as_buying_no_not_an_inflated_gain():
+    """Selling YES is buying NO. On a market quoted 0.05/0.07 that resolves NO,
+    a sell should make ~ (1/0.95 - 1) = +5.3%, NOT the absurd 1/0.05-1 = +1900%
+    the old convention produced."""
+    from src.signals.walkforward import _simulate_trade
+    event = {"id": 0, "timestamp": 0, "market_prob": 0.06,
+             "bid": 0.05, "ask": 0.07, "actual_outcome": 0.0}  # resolved NO
+    t = _simulate_trade(event, "sell", 0.02)
+    assert t["pnl_per_dollar"] == pytest.approx(1.0 / 0.95 - 1.0, abs=1e-9)
+
+
+def test_sell_on_a_yes_winner_loses_full_stake():
+    """Selling YES (buying NO) when YES actually wins loses the whole stake."""
+    from src.signals.walkforward import _simulate_trade
+    event = {"id": 0, "timestamp": 0, "market_prob": 0.50,
+             "bid": 0.48, "ask": 0.52, "actual_outcome": 1.0}  # resolved YES
+    t = _simulate_trade(event, "sell", 0.02)
+    assert t["pnl_per_dollar"] == pytest.approx(-1.0, abs=1e-9)
