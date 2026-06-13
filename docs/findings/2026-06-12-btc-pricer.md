@@ -41,3 +41,29 @@ OOS profit, one trade/market, walk-forward (36 trades):
 1. Deribit implied vol instead of realized (research's specific recommendation).
 2. More markets (n=36 is small) for significance.
 3. Realistic maker-fill model with adverse selection (the honest maker test).
+
+## Update: Deribit IV + multi-day — edge NOT confirmed
+
+Re-ran with Deribit DVOL (implied vol) on a 142-market sample. Calibration: with
+IV the pricer (Brier 0.1561) is closer to the market (0.1552) but still does not
+beat it; the market remains more right on disagreements. IV helps, as the
+research said, but doesn't flip the result.
+
+OOS profit (one trade/market, walk-forward, deflated Sharpe), Deribit IV:
+
+| Bound | Avg PnL/$ | Win | Sharpe | Deflated Sharpe |
+|---|---|---|---|---|
+| Taker (cross spread) | +0.0511 | 37.5% | +0.18 | 0.000 |
+| Maker (mid) | +0.0745 | 38.8% | +0.28 | 0.000 |
+
+**Both positive but neither significant.** The earlier "pricer beats market"
+(0.158 vs 0.160) was small-sample noise. Binding constraint: only ~3 distinct
+days of candle history are retrievable, so this is "nothing significant in
+available data," not a final proof. Net: no confirmed tradeable edge.
+
+## Session-wide pattern
+Across NBA momentum, NBA model-anchored mispricing, and BTC hourly pricer: every
+predictive edge tested is either efficient or insignificant after honest costs +
+OOS. Consistent with the research (edges thin / captured). The untested corners
+remain: genuinely low-liquidity markets, and market-neutral arbitrage (no
+prediction required).
