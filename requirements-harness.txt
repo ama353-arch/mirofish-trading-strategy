@@ -1,0 +1,4 @@
+# Runtime dependencies for the paper harnesses only.
+# Deliberately minimal: numpy/pandas/matplotlib are research-time, not runtime.
+requests>=2.31
+cryptography>=42        # in-process RSA-PSS signing, so the container needs no openssl binary
