@@ -113,3 +113,8 @@ logs/
 
 # Compiled C extensions
 *.c
+
+# Paper-harness logs and quote dumps: large, regenerable, and not evidence.
+# The ledgers (data/paper/*.json) ARE the evidence and stay tracked.
+data/paper/*.jsonl
+data/paper/*.log

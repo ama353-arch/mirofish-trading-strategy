@@ -1,0 +1,192 @@
+[
+ {
+  "ticker": "KXDOGE15M-26SEP120045-45",
+  "series": "KXDOGE15M",
+  "decision_ts": 1789188285.517749,
+  "side": "yes",
+  "price": 0.999,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.996,
+   "yes_ask": 0.999,
+   "secs_to_close": 14.48,
+   "requested": 100.0,
+   "depth_at_price": 504.0,
+   "depth_at_or_better": 504.0,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXSOL15M-26SEP120045-45",
+  "series": "KXSOL15M",
+  "decision_ts": 1789188289.780322,
+  "side": "yes",
+  "price": 0.998,
+  "contracts": 47.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.997,
+   "yes_ask": 0.998,
+   "secs_to_close": 10.22,
+   "requested": 100.0,
+   "depth_at_price": 47.0,
+   "depth_at_or_better": 47.0,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXBTC15M-26SEP120045-45",
+  "series": "KXBTC15M",
+  "decision_ts": 1789188290.397599,
+  "side": "yes",
+  "price": 0.99,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.986,
+   "yes_ask": 0.99,
+   "secs_to_close": 9.6,
+   "requested": 100.0,
+   "depth_at_price": 308.49,
+   "depth_at_or_better": 308.49,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXZEC15M-26SEP120045-45",
+  "series": "KXZEC15M",
+  "decision_ts": 1789188291.89386,
+  "side": "no",
+  "price": 0.999,
+  "contracts": 0.01,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.001,
+   "yes_ask": 0.0040000000000000036,
+   "secs_to_close": 8.11,
+   "requested": 100.0,
+   "depth_at_price": 0.01,
+   "depth_at_or_better": 0.01,
+   "method": "book_snapshot_v1"
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXCRYPTOLEAD15M-26SEP120045-XRP",
+  "series": "KXCRYPTOLEAD15M",
+  "decision_ts": 1789188294.7677472,
+  "side": "no",
+  "price": 0.99,
+  "contracts": 27.72,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.01,
+   "yes_ask": 0.040000000000000036,
+   "secs_to_close": 5.23,
+   "requested": 100.0,
+   "depth_at_price": 27.72,
+   "depth_at_or_better": 27.72,
+   "method": "book_snapshot_v1"
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXCRYPTOLEAD15M-26SEP120100-BTC",
+  "series": "KXCRYPTOLEAD15M",
+  "decision_ts": 1789189185.974171,
+  "side": "no",
+  "price": 0.99,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.01,
+   "yes_ask": 0.06000000000000005,
+   "secs_to_close": 14.03,
+   "requested": 100.0,
+   "depth_at_price": 1003.0,
+   "depth_at_or_better": 1003.0,
+   "method": "book_snapshot_v1"
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXBTC15M-26SEP120115-15",
+  "series": "KXBTC15M",
+  "decision_ts": 1789190085.8311198,
+  "side": "yes",
+  "price": 0.995,
+  "contracts": 0.02,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.994,
+   "yes_ask": 0.995,
+   "secs_to_close": 14.17,
+   "requested": 100.0,
+   "depth_at_price": 0.02,
+   "depth_at_or_better": 0.02,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXDOGE15M-26SEP120115-15",
+  "series": "KXDOGE15M",
+  "decision_ts": 1789190094.196224,
+  "side": "yes",
+  "price": 0.99,
+  "contracts": 40.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.98,
+   "yes_ask": 0.99,
+   "secs_to_close": 5.8,
+   "requested": 100.0,
+   "depth_at_price": 40.0,
+   "depth_at_or_better": 40.0,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXSOL15M-26SEP120130-30",
+  "series": "KXSOL15M",
+  "decision_ts": 1789190985.029511,
+  "side": "no",
+  "price": 0.998,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.002,
+   "yes_ask": 0.0030000000000000027,
+   "secs_to_close": 14.97,
+   "requested": 100.0,
+   "depth_at_price": 263.0,
+   "depth_at_or_better": 263.0,
+   "method": "book_snapshot_v1"
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXXRP15M-26SEP120130-30",
+  "series": "KXXRP15M",
+  "decision_ts": 1789190985.839992,
+  "side": "yes",
+  "price": 0.99,
+  "contracts": 76.79,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.97,
+   "yes_ask": 0.99,
+   "secs_to_close": 14.16,
+   "requested": 100.0,
+   "depth_at_price": 76.79,
+   "depth_at_or_better": 76.79,
+   "method": "book_snapshot_v1"
+  },
+  "result": 1
+ }
+]

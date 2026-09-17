@@ -1,0 +1,149 @@
+[
+ {
+  "ticker": "KXBTC15M-26SEP112345-45",
+  "series": "KXBTC15M",
+  "decision_ts": 1789184685.639829,
+  "side": "no",
+  "price": 0.998,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.002,
+   "yes_ask": 0.004,
+   "secs_to_close": 14.36
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXETH15M-26SEP112345-45",
+  "series": "KXETH15M",
+  "decision_ts": 1789184685.7285728,
+  "side": "no",
+  "price": 0.999,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.001,
+   "yes_ask": 0.002,
+   "secs_to_close": 14.27
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXXRP15M-26SEP112345-45",
+  "series": "KXXRP15M",
+  "decision_ts": 1789184685.8325918,
+  "side": "yes",
+  "price": 0.995,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.992,
+   "yes_ask": 0.995,
+   "secs_to_close": 14.17
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXETH15M-26SEP120000-00",
+  "series": "KXETH15M",
+  "decision_ts": 1789185586.104084,
+  "side": "yes",
+  "price": 0.998,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.993,
+   "yes_ask": 0.998,
+   "secs_to_close": 13.9
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXXRP15M-26SEP120000-00",
+  "series": "KXXRP15M",
+  "decision_ts": 1789185586.202122,
+  "side": "yes",
+  "price": 0.993,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.991,
+   "yes_ask": 0.993,
+   "secs_to_close": 13.8
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXBNB15M-26SEP120015-15",
+  "series": "KXBNB15M",
+  "decision_ts": 1789186487.2201102,
+  "side": "yes",
+  "price": 0.997,
+  "contracts": 28.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.994,
+   "yes_ask": 0.997,
+   "secs_to_close": 12.78,
+   "requested": 100.0,
+   "depth_at_price": 28.0,
+   "depth_at_or_better": 28.0
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXXRP15M-26SEP120030-30",
+  "series": "KXXRP15M",
+  "decision_ts": 1789187388.169317,
+  "side": "yes",
+  "price": 0.996,
+  "contracts": 100.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.991,
+   "yes_ask": 0.996,
+   "secs_to_close": 11.83,
+   "requested": 100.0,
+   "depth_at_price": 200.0,
+   "depth_at_or_better": 200.0
+  },
+  "result": 1
+ },
+ {
+  "ticker": "KXDOGE15M-26SEP120030-30",
+  "series": "KXDOGE15M",
+  "decision_ts": 1789187389.1616871,
+  "side": "no",
+  "price": 0.999,
+  "contracts": 48.01,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.001,
+   "yes_ask": 0.002,
+   "secs_to_close": 10.84,
+   "requested": 100.0,
+   "depth_at_price": 0.0,
+   "depth_at_or_better": 48.01
+  },
+  "result": 0
+ },
+ {
+  "ticker": "KXSOL15M-26SEP120030-30",
+  "series": "KXSOL15M",
+  "decision_ts": 1789187391.787953,
+  "side": "yes",
+  "price": 0.999,
+  "contracts": 75.0,
+  "rule": "final_seconds_favourite",
+  "meta": {
+   "yes_bid": 0.998,
+   "yes_ask": 0.999,
+   "secs_to_close": 8.21,
+   "requested": 100.0,
+   "depth_at_price": 75.0,
+   "depth_at_or_better": 75.0
+  },
+  "result": 1
+ }
+]
